@@ -16,7 +16,7 @@ public:
 private:	
     SPI _spi;
     DigitalOut _cs;
-	uint16_t Value[3];
+	uint32_t Value;
     uint32_t Position;
 	uint32_t must_update = 0;
     uint16_t Brightness; 
