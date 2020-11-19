@@ -1,7 +1,7 @@
 {
     "category": "Display",
     "name": "MAX7219PSU",
-    "inputs": 1,
+    "inputs": 2,
     "outputs": 0,
     "parameters": [
         {
@@ -65,7 +65,8 @@
     },
     "schematic_pins": {
         "inputs": [
-            1
+            1,
+            2
         ],
         "outputs": [
             0

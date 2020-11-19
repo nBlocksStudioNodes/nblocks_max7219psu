@@ -11,16 +11,16 @@ nBlock_MAX7219PSU::nBlock_MAX7219PSU(PinName MOSI, PinName MISO, PinName SCK, Pi
 }
 
 void nBlock_MAX7219PSU::triggerInput(nBlocks_Message message){
-	// input 0 receives an array of bytes
 	if (message.inputNumber == 0) {
-		// Copy values to internal array
-		uint16_t * source_values;
-		source_values = ((uint16_t *)message.pointerValue);
-		Position = source_values[0];
-        Value = source_values[1];		
-		// Set flag so we update the MAX7219 at the end of frame
-		must_update =  1;
+        Value = message.intValue;       // Get Value from the 1st Input		
+		Position = 1;
+        must_update =  1;               // Set flag so we update the MAX7219 at the end of frame
 	}
+    if (message.inputNumber == 1) {
+        Value = message.intValue;       // Get Value from the 2nd Input		
+		Position = 2;
+        must_update =  1;               // Set flag so we update the MAX7219 at the end of frame
+    }
 }
 
 void nBlock_MAX7219PSU::endFrame(void){
