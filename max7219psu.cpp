@@ -4,6 +4,7 @@ nBlock_MAX7219PSU::nBlock_MAX7219PSU(PinName MOSI, PinName MISO, PinName SCK, Pi
     _spi(MOSI, MISO, SCK, CS) {
     _spi.format(8,0);                // 8-bit format, mode 0,0
     _spi.frequency(1000000);         // SCLK = 1 MHz
+    _cs(CS);
 	// Reset flag
 	must_update = 0;
     init_MAX7219();		
@@ -30,7 +31,7 @@ void nBlock_MAX7219PSU::endFrame(void){
 }
 
 void nBlock_MAX7219PSU::max7219_write(uint16_t Value, uint16_t Position, uint16_t Brightness, uint16_t ScanLimit) {
-    cs = 1;                          // CS initially High 
+    _cs = 1;                          // CS initially High 
     spi_write_2bytes(0x0A, Brightness); 
     spi_write_2bytes(0x0B, ScanLimit); 
 
@@ -38,9 +39,9 @@ void nBlock_MAX7219PSU::max7219_write(uint16_t Value, uint16_t Position, uint16_
     if (Position == 1) offset = 4;      // This is for Volts
     if (Position == 2) offset = 0;      // This is for Amperes
     dig[3 + offset] = (Value / 1000);
-    dig[2 + offset] = (Value - dig7 * 1000) / 100;
-    dig[1 + offset] = (Value - dig7 * 1000 - dig6 * 100) / 10;
-    dig[0 + offset] = (Value - dig7 * 1000 - dig6 * 100 - dig5 * 10);
+    dig[2 + offset] = (Value - dig[3 + offset] * 1000) / 100;
+    dig[1 + offset] = (Value - dig[3 + offset] * 1000 - dig[2 + offset] * 100) / 10;
+    dig[0 + offset] = (Value - dig[3 + offset] * 1000 - dig[2 + offset] * 100 - dig[1 + offset] * 10);
 
     // Send digit values to MAX7219
     spi_write_2bytes(0x01 + offset, dig[0 + offset]);     //digit 0 
@@ -50,14 +51,14 @@ void nBlock_MAX7219PSU::max7219_write(uint16_t Value, uint16_t Position, uint16_
 }
 
 void nBlock_MAX7219PSU::spi_write_2bytes(unsigned char MSB, unsigned char LSB) {
-    cs = 0;                         // Set CS Low
+    _cs = 0;                         // Set CS Low
     _spi.write(MSB);                 // Send two bytes
     _spi.write(LSB);
-    cs = 1;                         // Set CS High
+    _cs = 1;                         // Set CS High
 }
 
 void nBlock_MAX7219PSU::init_MAX7219(void) {
-    cs = 1;                               // CS initially High 
+    _cs = 1;                               // CS initially High 
     spi_write_2bytes(0x09, 0xFF);         // Decoding off //nikos changed to full decode
     spi_write_2bytes(0x0A, 0x08);         // Brightness to intermediate
     spi_write_2bytes(0x0B, 0x07);         // Scan limit 7th digit
