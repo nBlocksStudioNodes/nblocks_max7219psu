@@ -15,7 +15,7 @@ public:
    
 private:	
     SPI _spi;
-    DigitalInOut _cs;
+    DigitalOut _cs;
 	uint32_t Value;
     uint32_t Position;
 	uint32_t must_update = 0;
