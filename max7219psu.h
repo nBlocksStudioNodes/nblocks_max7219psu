@@ -22,6 +22,7 @@ private:
     uint16_t Brightness; 
     uint16_t ScanLimit;
     uint16_t dig[8];
+    uint16_t offset;
 };
 
 #endif
