@@ -1,10 +1,10 @@
 #include "MAX7219PSU.h"
 
-nBlock_MAX7219PSU::nBlock_MAX7219PSU(PinName MOSI, PinName MISO, PinName SCK, PinName CS, uint16_t Brightness, uint16_t ScanLimit):
-    _spi(MOSI, MISO, SCK, CS) {
+nBlock_MAX7219PSU::nBlock_MAX7219PSU(PinName MOSI, PinName MISO, PinName SCK, PinName pinCS, uint16_t Brightness, uint16_t ScanLimit):
+    _spi(MOSI, MISO, SCK, CS) _cs(pinCS)  {
     _spi.format(8,0);                // 8-bit format, mode 0,0
     _spi.frequency(1000000);         // SCLK = 1 MHz
-    _cs(CS);
+    
 	// Reset flag
 	must_update = 0;
     init_MAX7219();		

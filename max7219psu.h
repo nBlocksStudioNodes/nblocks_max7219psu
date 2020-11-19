@@ -5,7 +5,7 @@
 
 class nBlock_MAX7219PSU: public nBlockSimpleNode<1> {
 public:
-    nBlock_MAX7219PSU(PinName MOSI, PinName MISO, PinName SCK, PinName CS, uint16_t Brightness, uint16_t ScanLimit);
+    nBlock_MAX7219PSU(PinName MOSI, PinName MISO, PinName SCK, PinName pinCS, uint16_t Brightness, uint16_t ScanLimit);
     void triggerInput(nBlocks_Message message);
 	void endFrame();
 	void max7219_write(uint16_t Value, uint16_t Position, uint16_t Brightness, uint16_t ScanLimit);
