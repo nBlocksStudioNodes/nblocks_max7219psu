@@ -40,10 +40,10 @@ void nBlock_MAX7219PSU::max7219_write1(uint16_t Value1) {
     dig[1] = (Value1 - dig[3] * 1000 - dig[2] * 100) / 10;
     dig[0] = (Value1 - dig[3] * 1000 - dig[2] * 100 - dig[1] * 10);
     // Send digit values to MAX7219
-    spi_write_2bytes(0x01, dig[3]);         //digit 0 
-    spi_write_2bytes(0x02, dig[2]);         //digit 1 
-    spi_write_2bytes(0x03, dig[1]);         //digit 2 has active the decimal point
-    spi_write_2bytes(0x04, dig[0]);         //digit 3 
+    spi_write_2bytes(0x01, dig[0]);         //digit 0 
+    spi_write_2bytes(0x02, dig[1]);         //digit 1 
+    spi_write_2bytes(0x03, dig[2]);         //digit 2 has active the decimal point
+    spi_write_2bytes(0x04, dig[3]);         //digit 3 
 }
 
 void nBlock_MAX7219PSU::max7219_write2(uint16_t Value2) {
@@ -53,10 +53,10 @@ void nBlock_MAX7219PSU::max7219_write2(uint16_t Value2) {
     dig[5] = (Value2 - dig[7] * 1000 - dig[6] * 100) / 10;
     dig[4] = (Value2 - dig[7] * 1000 - dig[6] * 100 - dig[5] * 10);
     // Send digit values to MAX7219
-    spi_write_2bytes(0x05, dig[7]);         //digit 0 
-    spi_write_2bytes(0x06, dig[6]);         //digit 1 
-    spi_write_2bytes(0x07, dig[5]);         //digit 2 has active the decimal point
-    spi_write_2bytes(0x08, dig[4]);         //digit 3 
+    spi_write_2bytes(0x05, dig[4]);         //digit 0 
+    spi_write_2bytes(0x06, dig[5]);         //digit 1 
+    spi_write_2bytes(0x07, dig[6]);         //digit 2 has active the decimal point
+    spi_write_2bytes(0x08, dig[7]);         //digit 3 
 }
 
 
