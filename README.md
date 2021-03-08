@@ -8,7 +8,7 @@ Node to drive MAX7219 8 digits 7segment Led Display driver, in BCD mode for Volt
 <p align="center">
 <img
 src="img/01.PNG"
-width = 300
+width = 500
 />
 </p>
 
@@ -19,7 +19,8 @@ width = 300
  *  Tested: LPC1768
  *  Author: N. Chalikias
 
-## Implementation details
+## Implementation details:
+
 Decimal point in the centre for both, 4-digit display-sets.  
 If the input value is `float` then is displayed with 2 integer and 2 decimal digits,  
 For example: “24.67”
@@ -37,7 +38,8 @@ For example: “24.67”
  *  uint16_t: ScanLimit
 
 ## Example:
+Temperature from the Thermistor to the left 4-digits and Counter Value to the right 4-digits
 
-[Ticker]-->[Counter]-->[MAX7219PSU]
-
+[Ticker]-->[Thermistor]-->(1)[MAX7219PSU]  
+[Ticker]-->[Counter]   -->(2)[MAX7219PSU]
 
