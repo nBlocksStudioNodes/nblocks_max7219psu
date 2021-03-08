@@ -12,12 +12,14 @@ nBlock_MAX7219PSU::nBlock_MAX7219PSU(PinName MOSI, PinName MISO, PinName SCK, Pi
 }
 
 void nBlock_MAX7219PSU::triggerInput(nBlocks_Message message){
-	if (message.inputNumber == 0) {
-        Value1 = message.intValue;       // Get Value from the 1st Input		
+	if (message.inputNumber == 1) {
+        if (message.dataType == OUTPUT_TYPE_INT)    ValueLeft = message.intValue;       // Get Value from the 1st Input
+        if (message.dataType == OUTPUT_TYPE_FLOAT) 	ValueLeft = (uint32_t)(100*message.floatValue);	
 		Position1 = 1;
 	}
-    if (message.inputNumber == 1) {
-        Value2 = message.intValue;       // Get Value from the 2nd Input		
+    if (message.inputNumber == 0) {
+        if (message.dataType == OUTPUT_TYPE_INT)    ValueRight = message.intValue;       // Get Value from the 1st Input
+        if (message.dataType == OUTPUT_TYPE_FLOAT) 	ValueRight = (uint32_t)(100*message.floatValue);	
 		Position2 = 1;
     }
 }
@@ -25,11 +27,11 @@ void nBlock_MAX7219PSU::triggerInput(nBlocks_Message message){
 void nBlock_MAX7219PSU::endFrame(void){
 	if (Position1) {
 		Position1 = 0;
-		max7219_write1(Value1);
+		max7219_write1(ValueLeft);
     }
 	if (Position2) {
 		Position2 = 0;
-		max7219_write2(Value2);
+		max7219_write2(ValueRight);
 	}	
 }
 
@@ -42,7 +44,7 @@ void nBlock_MAX7219PSU::max7219_write1(uint16_t Value1) {
     // Send digit values to MAX7219
     spi_write_2bytes(0x01, dig[0]);         //digit 0 
     spi_write_2bytes(0x02, dig[1]);         //digit 1 
-    spi_write_2bytes(0x03, dig[2]);         //digit 2 has active the decimal point
+    spi_write_2bytes(0x03, dig[2] + 128);         //digit 2 has active the decimal point
     spi_write_2bytes(0x04, dig[3]);         //digit 3 
 }
 
@@ -55,7 +57,7 @@ void nBlock_MAX7219PSU::max7219_write2(uint16_t Value2) {
     // Send digit values to MAX7219
     spi_write_2bytes(0x05, dig[4]);         //digit 0 
     spi_write_2bytes(0x06, dig[5]);         //digit 1 
-    spi_write_2bytes(0x07, dig[6]);         //digit 2 has active the decimal point
+    spi_write_2bytes(0x07, dig[6] + 128);         //digit 2 has active the decimal point
     spi_write_2bytes(0x08, dig[7]);         //digit 3 
 }
 
