@@ -11,6 +11,12 @@ src="img/01.PNG"
 width = 500
 />
 </p>
+<p align="center">
+<img
+src="img/12.PNG"
+width = 500
+/>
+</p>
 
 ----
 
